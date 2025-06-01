@@ -1,50 +1,88 @@
-# Welcome to your Expo app 👋
+# MyApp - Мобильное приложение на React Native
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Описание проекта
 
-## Get started
+MyApp - это современное мобильное приложение, разработанное с использованием React Native и Expo. Приложение предоставляет пользователям удобный интерфейс для работы с различными функциями и сервисами.
 
-1. Install dependencies
+## Технологический стек
 
-   ```bash
-   npm install
-   ```
+- React Native 0.79.2
+- Expo SDK 53
+- TypeScript
+- React Navigation
+- Axios для HTTP-запросов
+- MMKV для локального хранилища
+- Reanimated для анимаций
+- FlashList для оптимизированных списков
 
-2. Start the app
+## Структура проекта
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+myapp/
+├── app/                    # Основной код приложения
+│   ├── _layout.tsx        # Корневой layout приложения
+│   ├── index.tsx          # Главная страница
+│   ├── explore.tsx        # Страница исследования
+│   └── +not-found.tsx     # Страница 404
+├── src/                    # Исходный код
+├── assets/                # Статические ресурсы
+├── ios/                   # iOS специфичные файлы
+├── android/               # Android специфичные файлы
+└── scripts/               # Вспомогательные скрипты
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Основные функции
 
-## Learn more
+- Навигация между экранами с использованием React Navigation
+- Оптимизированные списки с использованием FlashList
+- Локальное хранение данных с MMKV
+- Анимации и жесты с Reanimated
+- Поддержка TypeScript для типобезопасности
+- Интеграция с веб-сервисами через Axios
 
-To learn more about developing your project with Expo, look at the following resources:
+## Установка и запуск
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Предварительные требования
 
-## Join the community
+- Node.js
+- npm или yarn
+- Expo CLI
+- iOS Simulator (для Mac) или Android Studio (для Android)
 
-Join our community of developers creating universal apps.
+### Установка зависимостей
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npm install
+# или
+yarn install
+```
+
+### Запуск приложения
+
+```bash
+# Запуск в режиме разработки
+npm start
+# или
+yarn start
+
+# Запуск на iOS
+npm run ios
+# или
+yarn ios
+
+# Запуск на Android
+npm run android
+# или
+yarn android
+```
+
+## Разработка
+
+- Используется ESLint и Prettier для форматирования кода
+- Настроен Husky для pre-commit хуков
+- TypeScript для статической типизации
+- Модульная структура для удобной разработки
+
+## Лицензия
+
+Private - Все права защищены
