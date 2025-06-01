@@ -4,7 +4,7 @@ import { spacing, styles, themes } from '@/src/currency/styles/currency.styles';
 import { CurrencyActionType, type Currency } from '@/src/currency/types/currency.types';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useState } from 'react';
-import { FlatList, Text, TextInput, useColorScheme, View } from 'react-native';
+import { FlatList, KeyboardAvoidingView, Platform, Text, TextInput, useColorScheme, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -55,7 +55,7 @@ export default function HomeScreen ()
     {
       const currency = side === 'from' ? state?.fromCurrency : state?.toCurrency;
       return (
-        <Animated.View entering={FadeIn.duration( 500 )} exiting={FadeOut.duration( 500 )}>
+        <Animated.View entering={FadeIn.duration( 500 )} exiting={FadeOut.duration( 100 )}>
           <CurrencyListItem
             currency={item}
             isSelected={currency?.code === item?.code}
@@ -68,60 +68,65 @@ export default function HomeScreen ()
   );
 
   return (
-    <View
-      style={[
-        themedStyles.container,
-        {
-          paddingBottom: insets.bottom,
-        },
-      ]}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1, paddingBottom: insets.bottom }}
     >
-      <TextInput
-        style={themedStyles.input}
-        placeholder="Search (e.g., USD)"
-        placeholderTextColor={themes[ colorScheme ].border}
-        value={search}
-        onChangeText={setSearch}
-      />
-      <Animated.View
-        layout={LinearTransition.springify().damping( 10 ).stiffness( 100 ).mass( 1 )}
-        style={{
-          borderRadius: spacing.sm,
-          overflow: 'hidden',
-          flex: 1,
-        }}
+      <View
+        style={[
+          themedStyles.container,
+          {
+            paddingBottom: insets.bottom,
+          },
+        ]}
       >
-        <FlatList
-          data={filteredCurrencies}
-          renderItem={renderItem}
-          bounces={false}
-          keyExtractor={( item: Currency ) => item?.code}
-          removeClippedSubviews={true}
-          initialNumToRender={10}
-          maxToRenderPerBatch={10}
-          ListEmptyComponent={
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                paddingVertical: 30,
-                alignItems: 'center',
-              }}
-            >
-              <Text style={themedStyles.listItemText}>No results found</Text>
-            </View>
-          }
-          windowSize={10}
-          updateCellsBatchingPeriod={100}
-          onEndReachedThreshold={0.5}
-          onEndReached={() => { }}
-          contentContainerStyle={{
-            backgroundColor: 'rgba(231, 231, 231, 1)',
+        <TextInput
+          style={themedStyles.input}
+          placeholder="Search (e.g., USD)"
+          placeholderTextColor={themes[ colorScheme ].border}
+          value={search}
+          onChangeText={setSearch}
+        />
+        <Animated.View
+          layout={LinearTransition.springify().damping( 10 ).stiffness( 100 ).mass( 1 )}
+          style={{
             borderRadius: spacing.sm,
             overflow: 'hidden',
+            flex: 1,
           }}
-        />
-      </Animated.View>
-    </View>
+        >
+          <FlatList
+            data={filteredCurrencies}
+            renderItem={renderItem}
+            bounces={false}
+            keyExtractor={( item: Currency ) => item?.code}
+            removeClippedSubviews={true}
+            initialNumToRender={10}
+            maxToRenderPerBatch={10}
+            ListEmptyComponent={
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  paddingVertical: 30,
+                  alignItems: 'center',
+                }}
+              >
+                <Text style={themedStyles.listItemText}>No results found</Text>
+              </View>
+            }
+            windowSize={10}
+            updateCellsBatchingPeriod={100}
+            onEndReachedThreshold={0.5}
+            onEndReached={() => { }}
+            contentContainerStyle={{
+              backgroundColor: 'rgba(231, 231, 231, 1)',
+              borderRadius: spacing.sm,
+              overflow: 'hidden',
+            }}
+          />
+        </Animated.View>
+      </View>
+    </KeyboardAvoidingView>
   );
 }

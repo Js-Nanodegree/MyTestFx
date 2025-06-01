@@ -76,6 +76,25 @@ npm run android
 yarn android
 ```
 
+## Сборка для Android
+
+### Debug сборка
+
+Debug APK можно найти по пути:
+
+```
+android/app/build/outputs/apk/debug/app-releaw.apk
+```
+
+### Скриншоты приложения
+
+![Главный экран (Android)](assets/readme/simulator_screenshot_0DBF1E64-0BA8-4949-A9F3-E4D29A4E4E23.png)
+![Выбор валюты (Android)](assets/readme/simulator_screenshot_652FB4A6-832A-4AA7-B8C4-190321428947.png)
+![Поиск RUB (Android)](assets/readme/simulator_screenshot_D4BCF10E-A0A0-4AC0-AD69-AFD511D3F061.png)
+![Главный экран (iOS)](assets/readme/Снимок экрана 2025-06-01 в 14.47.24.png)
+![Выбор валюты (iOS)](assets/readme/Снимок экрана 2025-06-01 в 14.47.40.png)
+![Поиск RUB (iOS)](assets/readme/Снимок экрана 2025-06-01 в 14.47.59.png)
+
 ## Разработка
 
 - Используется ESLint и Prettier для форматирования кода

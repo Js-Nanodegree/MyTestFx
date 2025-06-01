@@ -30,35 +30,39 @@ export default function RootLayout ()
   }
 
   return (
-    <CurrencyProvider>
-      <ThemeProvider value={customTheme}>
-        <View style={globalStyles.container}>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="explore"
-              options={{
-                headerShown: true,
-                headerBackTitleStyle: {
-                  fontSize: 16,
-                  fontFamily: 'Inter-SemiBold',
-                },
-                title: 'Currency Select',
-                headerTitleStyle: {
-                  fontSize: 18,
-                  fontFamily: 'Inter-Bold',
-                },
+    <>
+      <StatusBar style="auto" backgroundColor="white" />
+      <CurrencyProvider>
+        <ThemeProvider value={customTheme}>
+          <View style={globalStyles.container}>
+            <Stack
+              screenOptions={{
+                headerShown: false,
               }}
-            />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="auto" />
-        </View>
-      </ThemeProvider>
-    </CurrencyProvider>
+            >
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="explore"
+                options={{
+                  headerShown: true,
+                  headerBackTitleStyle: {
+                    fontSize: 16,
+                    fontFamily: 'Inter-SemiBold',
+                  },
+                  headerBackTitle: 'Back',
+                  title: 'Currency Select',
+                  headerTitleStyle: {
+                    fontSize: 18,
+                    fontFamily: 'Inter-Bold',
+                  },
+                }}
+              />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+          </View>
+        </ThemeProvider>
+      </CurrencyProvider>
+    </>
   );
 }

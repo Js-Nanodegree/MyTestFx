@@ -18,5 +18,6 @@ export const globalStyles = StyleSheet.create( {
     } as TextStyle,
     container: {
         flex: 1,
+        backgroundColor: 'white',
     } as ViewStyle,
 } ); 
