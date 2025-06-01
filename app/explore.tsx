@@ -8,45 +8,50 @@ import { Animated, FlatList, TextInput, useColorScheme, View } from 'react-nativ
 import { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function HomeScreen() {
+export default function HomeScreen ()
+{
   const { state, dispatch } = useCurrency();
   const { availableCurrencies } = state;
-  const [search, setSearch] = useState('');
+  const [ search, setSearch ] = useState( '' );
   const colorScheme = useColorScheme() || 'light';
-  const themedStyles = styles(colorScheme);
+  const themedStyles = styles( colorScheme );
   const insets = useSafeAreaInsets();
   const { side } = useLocalSearchParams();
   const navigation = useNavigation();
 
   const filteredCurrencies = availableCurrencies.filter(
-    (currency: { code: string; name: string }) =>
-      currency?.code.toLowerCase().includes(search.toLowerCase()) ||
-      currency?.name.toLowerCase().includes(search.toLowerCase())
+    ( currency: { code: string; name: string } ) =>
+      currency?.code.toLowerCase().includes( search.toLowerCase() ) ||
+      currency?.name.toLowerCase().includes( search.toLowerCase() )
   );
 
   const renderItem = React.useCallback(
-    ({ item }: { item: Currency }) => {
-      const handleSelect = (currency: Currency) => {
-        dispatch({ type: CurrencyActionType.SET_AMOUNT, payload: '0' });
-        if (side === 'from') {
-          dispatch({ type: CurrencyActionType.SET_FROM_CURRENCY, payload: currency });
-        } else {
-          dispatch({ type: CurrencyActionType.SET_TO_CURRENCY, payload: currency });
+    ( { item }: { item: Currency } ) =>
+    {
+      const handleSelect = ( currency: Currency ) =>
+      {
+        dispatch( { type: CurrencyActionType.SET_AMOUNT, payload: '100' } );
+        if ( side === 'from' )
+        {
+          dispatch( { type: CurrencyActionType.SET_FROM_CURRENCY, payload: currency } );
+        } else
+        {
+          dispatch( { type: CurrencyActionType.SET_TO_CURRENCY, payload: currency } );
         }
         navigation.goBack();
       };
       const currency = side === 'from' ? state.fromCurrency : state.toCurrency;
       return (
-        <Animated.View entering={FadeIn.duration(100)}>
+        <Animated.View entering={FadeIn.duration( 100 )}>
           <CurrencyListItem
             currency={item}
             isSelected={currency.code === item?.code}
-            onSelect={() => handleSelect(item)}
+            onSelect={() => handleSelect( item )}
           />
         </Animated.View>
       );
     },
-    [state, side]
+    [ state, side ]
   );
 
   return (
@@ -61,7 +66,7 @@ export default function HomeScreen() {
       <TextInput
         style={themedStyles.input}
         placeholder="Search (e.g., USD)"
-        placeholderTextColor={themes[colorScheme].border}
+        placeholderTextColor={themes[ colorScheme ].border}
         value={search}
         onChangeText={setSearch}
       />
@@ -73,10 +78,10 @@ export default function HomeScreen() {
         }}
       >
         <FlatList
-          data={filteredCurrencies}
+          data={filteredCurrencies.sort( ( a: Currency, b: Currency ) => a.name.localeCompare( b.name ) )}
           renderItem={renderItem}
           bounces={false}
-          keyExtractor={(item: { code: string }) => item?.code}
+          keyExtractor={( item: { code: string } ) => item?.code}
           // estimatedItemSize={52}
           removeClippedSubviews={true}
           initialNumToRender={10}
@@ -84,7 +89,7 @@ export default function HomeScreen() {
           windowSize={10}
           updateCellsBatchingPeriod={100}
           onEndReachedThreshold={0.5}
-          onEndReached={() => {}}
+          onEndReached={() => { }}
           contentContainerStyle={{
             backgroundColor: 'rgba(231, 231, 231, 1)',
             borderRadius: spacing.sm,

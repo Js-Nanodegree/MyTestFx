@@ -1,5 +1,5 @@
-import { CurrencyState } from '../../types/currency.types';
 import { DecimalOperations } from '../../helper/DecimalOperations';
+import { CurrencyState } from '../../types/currency.types';
 
 export const initialState: CurrencyState = {
     rates: {},
@@ -16,7 +16,7 @@ export const initialState: CurrencyState = {
         name: 'Euro',
         flag: '🇪🇺',
     },
-    amount: '0',
+    amount: '100',
     convertedAmount: '0',
     fetchEnabled: false,
     availableCurrencies: []

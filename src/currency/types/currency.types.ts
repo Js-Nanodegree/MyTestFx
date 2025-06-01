@@ -18,6 +18,8 @@ export interface CurrencyContextType extends CurrencyState
   toggleFetch: () => void;
 }
 export type Currency = {
+  symbolNative: ReactNode;
+  flagSrc: any;
   code: string;
   name: string;
   flag: string;
