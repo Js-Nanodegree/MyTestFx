@@ -4,7 +4,7 @@
     "slug": "converter-for-currency",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/ic_launcher/android/ic_launcher-web.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -15,13 +15,14 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "icon": "./assets/ic_launcher/ios/AppIcon.appiconset/Icon-App-60x60@3x.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.yourcompany.currencyconverter",
       "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/ic_launcher/android/ic_launcher-web.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.yourcompany.currencyconverter",
