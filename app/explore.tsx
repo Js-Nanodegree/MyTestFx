@@ -5,54 +5,66 @@ import { CurrencyActionType, type Currency } from '@/src/currency/types/currency
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useState } from 'react';
 import { FlatList, Text, TextInput, useColorScheme, View } from 'react-native';
-import Animated, { FadeIn } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function HomeScreen() {
+export default function HomeScreen ()
+{
   const { state, dispatch } = useCurrency();
   const { availableCurrencies } = state;
-  const [search, setSearch] = useState('');
+  const [ search, setSearch ] = useState( '' );
   const colorScheme = useColorScheme() || 'light';
-  const themedStyles = styles(colorScheme);
+  const themedStyles = styles( colorScheme );
   const insets = useSafeAreaInsets();
   const { side } = useLocalSearchParams();
   const navigation = useNavigation();
 
-  const filteredCurrencies = React.useMemo(() => {
-    if (!availableCurrencies) return [];
-
+  const filteredCurrencies = React.useMemo( () =>
+  {
+    if ( !availableCurrencies ) return [];
     const filtered = availableCurrencies.filter(
-      (currency: Currency) =>
-        currency?.code?.toLowerCase().includes(search.toLowerCase()) ||
-        currency?.name?.toLowerCase().includes(search.toLowerCase())
+      ( currency: Currency ) =>
+        currency?.code?.toLowerCase().includes( search.toLowerCase() ) ||
+        currency?.name?.toLowerCase().includes( search.toLowerCase() )
     );
 
-    return filtered.sort((a: Currency, b: Currency) => a.name.localeCompare(b.name));
-  }, [availableCurrencies, search]);
+    return filtered.sort( ( a: Currency, b: Currency ) => a.name.localeCompare( b.name ) );
+  }, [ availableCurrencies, search ] );
+
+  const refTimer = React.useRef<NodeJS.Timeout | null>( null );
+
+  const handleSelect = ( currency: Currency ) =>
+  {
+    dispatch( { type: CurrencyActionType.SET_AMOUNT, payload: '100' } );
+    if ( side === 'from' )
+    {
+      dispatch( { type: CurrencyActionType.SET_FROM_CURRENCY, payload: currency } );
+    } else
+    {
+      dispatch( { type: CurrencyActionType.SET_TO_CURRENCY, payload: currency } );
+    }
+    refTimer.current && clearTimeout( refTimer.current );
+    refTimer.current = setTimeout( () =>
+    {
+      navigation.goBack();
+    }, 500 )
+  }
 
   const renderItem = React.useCallback(
-    ({ item }: { item: Currency }) => {
-      const handleSelect = (currency: Currency) => {
-        dispatch({ type: CurrencyActionType.SET_AMOUNT, payload: '100' });
-        if (side === 'from') {
-          dispatch({ type: CurrencyActionType.SET_FROM_CURRENCY, payload: currency });
-        } else {
-          dispatch({ type: CurrencyActionType.SET_TO_CURRENCY, payload: currency });
-        }
-        navigation.goBack();
-      };
+    ( { item }: { item: Currency } ) =>
+    {
       const currency = side === 'from' ? state?.fromCurrency : state?.toCurrency;
       return (
-        <Animated.View entering={FadeIn.duration(100)}>
+        <Animated.View entering={FadeIn.duration( 500 )} exiting={FadeOut.duration( 500 )}>
           <CurrencyListItem
             currency={item}
             isSelected={currency?.code === item?.code}
-            onSelect={() => handleSelect(item)}
+            onSelect={() => handleSelect( item )}
           />
         </Animated.View>
       );
     },
-    [state, side, dispatch, navigation]
+    [ state, side, dispatch, navigation ]
   );
 
   return (
@@ -67,11 +79,12 @@ export default function HomeScreen() {
       <TextInput
         style={themedStyles.input}
         placeholder="Search (e.g., USD)"
-        placeholderTextColor={themes[colorScheme].border}
+        placeholderTextColor={themes[ colorScheme ].border}
         value={search}
         onChangeText={setSearch}
       />
-      <View
+      <Animated.View
+        layout={LinearTransition.springify().damping( 10 ).stiffness( 100 ).mass( 1 )}
         style={{
           borderRadius: spacing.sm,
           overflow: 'hidden',
@@ -82,7 +95,7 @@ export default function HomeScreen() {
           data={filteredCurrencies}
           renderItem={renderItem}
           bounces={false}
-          keyExtractor={(item: Currency) => item?.code}
+          keyExtractor={( item: Currency ) => item?.code}
           removeClippedSubviews={true}
           initialNumToRender={10}
           maxToRenderPerBatch={10}
@@ -101,14 +114,14 @@ export default function HomeScreen() {
           windowSize={10}
           updateCellsBatchingPeriod={100}
           onEndReachedThreshold={0.5}
-          onEndReached={() => {}}
+          onEndReached={() => { }}
           contentContainerStyle={{
             backgroundColor: 'rgba(231, 231, 231, 1)',
             borderRadius: spacing.sm,
             overflow: 'hidden',
           }}
         />
-      </View>
+      </Animated.View>
     </View>
   );
 }

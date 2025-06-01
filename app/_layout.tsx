@@ -45,10 +45,13 @@ export default function RootLayout ()
                 headerShown: true,
                 headerBackTitleStyle: {
                   fontSize: 16,
-                  fontFamily: 'Inter-Regular',
+                  fontFamily: 'Inter-SemiBold',
                 },
-                headerBackTitle: 'Currency Select',
-                title: '',
+                title: 'Currency Select',
+                headerTitleStyle: {
+                  fontSize: 18,
+                  fontFamily: 'Inter-Bold',
+                },
               }}
             />
             <Stack.Screen name="+not-found" />
