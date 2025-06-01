@@ -85,7 +85,7 @@ Debug APK можно найти по пути:
 ```
 android/app/build/outputs/apk/debug/app-release.apk
 ```
-![Пример сборки)](assets/readme//apk/debug/app-release.apk)
+![Пример сборки)](assets/readme/app-release.apk)
 
 ### Скриншоты приложения
 
